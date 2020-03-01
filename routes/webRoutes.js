@@ -18,4 +18,8 @@ router.get("/show", function(req,res){
     res.render("show")
 })
 
+router.get("/new", function(req,res){
+    res.render("new")
+})
+
 module.exports = router
