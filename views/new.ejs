@@ -1,5 +1,30 @@
-<h1>I am on a new page</h1>
+<head>
+    <!-- BootStrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 
 
+
+<body>
+    <div class="container">
+        <div class="modal-body">
+            <form method="POST" action="/concession">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="studentName" placeholder="Name" aria-describedby="emailHelp" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="balance" placeholder="Balance" required> 
+                </div>
+                <div class="form-group">
+                <input type="text" name="picture" placeholder="Picture" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+
+</body>
 
 <%- include ('../views/partials/footer.ejs') %>

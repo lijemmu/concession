@@ -6,6 +6,11 @@
 
 // Views > Home
 
+  $("#addStudent").on("click", function(e) {
+    e.preventDefault();
+    $("#addStudentModal").modal('show').find('.modal-content').load($(this).attr('href'))
+  })
+
 // Views > Login 
 
 $("#submitButton").on("click", function (e) {

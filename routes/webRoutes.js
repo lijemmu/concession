@@ -14,6 +14,12 @@ router.get("/home", function(req,res){
     res.render("home")
 })
 
+router.post("/concession", function(req, res){
+    var name = req.body.studentName,
+        balance = req.body.balance,
+        picture = req.body.picture;
+})
+
 router.get("/show", function(req,res){
     res.render("show")
 })
