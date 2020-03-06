@@ -1,10 +1,32 @@
 <%- include ('../views/partials/header.ejs') %>
 
 <div class="container">
-    <div class="row">
-        <a href="/new" id="addStudent">
-            <i class="fas fa-plus fa-9x"></i>
+    <div class="row mb-5" style="margin-left: 130px;">
+        <a href="/new" id="addStudent" class="mr-4 mt-5">
+            <i class="fas fa-plus fa-9x text-info"></i>
         </a>
+        <form class="form-inline" style="margin-top: 60px;" >
+            <input class="form-control mr-3 py-3 text-center" style="width: 500px;" type="search" placeholder="Search"
+                aria-label="Search">
+            <button class="btn btn-outline-info btn-lg" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+<!-- The users cards -->
+<div class="container">
+    <div class="row">
+        <% users.forEach(function(user){ %>
+        <div class="col-md-4 mb-3">
+            <div class="card" style="width: 18rem;">
+                <img src="<%= user.picture %>" alt="" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title"><%= user.name%></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= user.balance%></h6>
+                </div>
+            </div>
+        </div>
+        <% }) %>
     </div>
 </div>
 
