@@ -11,6 +11,12 @@
     $("#addStudentModal").modal('show').find('.modal-content').load($(this).attr('href'))
   })
 
+  //Home > edit button
+$(".edit").on("click", function(e){
+  e.preventDefault();
+  $("#editStudentModal").modal('show').find('.modal-content').load($(this).attr('href'))
+})
+  
 // Views > Login 
 
 $("#submitButton").on("click", function (e) {
@@ -29,3 +35,4 @@ $('#aboutPage').on('click', function (e) {
 })
 
 // Views > Shows 
+

@@ -50,4 +50,13 @@ router.get("/new", function (req, res) {
     res.render("new")
 })
 
+router.get("/:id/edit", function (req, res){
+    Concession.findById(req.params.id, function(err, foundUser){
+        if(err){
+            console.log(err)
+        } else {
+            res.render("edit", {user : foundUser})
+        }
+    })
+})
 module.exports = router
