@@ -59,4 +59,15 @@ router.get("/:id/edit", function (req, res){
         }
     })
 })
+
+router.put("/:id", function(req, res){
+    Concession.findByIdAndUpdate(req.params.id, req.body.updatedUser, function(err, foundUser){
+        if(err){
+            console.log(err)
+        } else {
+            res.redirect("/home")
+        }
+    })
+})
+
 module.exports = router

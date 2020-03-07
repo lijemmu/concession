@@ -11,15 +11,15 @@
                 <h3 class="modal-title">Edit <%= user.name %> </h3>
             </div>
             <div class="modal-body text-center">
-                <form method="POST" action="/concession">
+                <form method="POST" action="/<%= user._id %>?_method=PUT">
                     <div class="form-group">
-                        <input type="text" class="text-center form-control" value="<%=user.name %>" name="studentName"  aria-describedby="Student Name" required>
+                        <input type="text" class="text-center form-control" value="<%=user.name %>" name="updatedUser[name]"  aria-describedby="Student Name" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="text-center form-control" name="balance" value="<%=user.balance %>" required> 
+                        <input type="number" class="text-center form-control" name="updatedUser[balance]" value="<%=user.balance %>" required> 
                     </div>
                     <div class="form-group">
-                    <input type="text" name="picture" value="<%= user.picture%>" class="text-center form-control">
+                    <input type="text" name="updatedUser[picture]" value="<%= user.picture%>" class="text-center form-control">
                     </div>
     
                     <button type="submit" class="btn btn-outline-info btn-lg w-50">Submit</button>
