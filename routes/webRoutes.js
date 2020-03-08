@@ -10,6 +10,9 @@ router.get("/aboutPage", function(req,res){
     res.render("aboutPage")
 })
 
+router.get("/new", function (req, res) {
+    res.render("new")
+})
 
 router.get("/about", function (req, res) {
     res.render("about")
@@ -54,10 +57,6 @@ router.get("/:id", function (req, res) {
             res.render("show", {user: user})
         }
     })
-})
-
-router.get("/new", function (req, res) {
-    res.render("new")
 })
 
 router.get("/:id/edit", function (req, res){
