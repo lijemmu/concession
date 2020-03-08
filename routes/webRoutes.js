@@ -6,6 +6,10 @@ router.get("/login", function (req, res) {
     res.render("login")
 })
 
+router.get("/aboutPage", function(req,res){
+    res.render("aboutPage")
+})
+
 
 router.get("/about", function (req, res) {
     res.render("about")
@@ -42,8 +46,14 @@ router.post("/concession", function (req, res) {
     })
 })
 
-router.get("/show", function (req, res) {
-    res.render("show")
+router.get("/:id", function (req, res) {
+    Concession.findById(req.params.id, function(err, user){
+        if(err){
+            console.log(err)
+        }else{
+            res.render("show", {user: user})
+        }
+    })
 })
 
 router.get("/new", function (req, res) {
@@ -69,5 +79,6 @@ router.put("/:id", function(req, res){
         }
     })
 })
+
 
 module.exports = router
