@@ -1,4 +1,4 @@
-<%- include ('../views/partials/header.ejs') %>
+<%- include ('../partials/header.ejs') %>
 
 <div class="container">
     <div class="row mb-5" style="margin-left: 130px;">
@@ -26,7 +26,14 @@
                     <a href="/<%= user._id %>/edit" class="edit">
                         <h5 class="card-title"><%= user.name%></h5>
                     </a>
-                    <h6 class="card-subtitle mb-2 text-muted">$<%= user.balance%></h6>
+                    <a onclick="showInput('<%= user._id %>', '<%= user.balance %>')">
+                        <h6 id="<%= user._id %>" class="card-subtitle mb-2 text-muted">$<%= user.balance%></h6>
+                    </a>
+                    <form action="/receipt/:id?_method=PUT" method="post">
+                        <input id="<%= user._id %>Input" name="receipt[action]"  type="number" class="w-50 d-none">
+                        <input type="hidden" name="receipt[date]">
+                        <input type="hidden" name="receipt[balance]">
+                    </form>
                 </div>
             </div>
         </div>
@@ -50,4 +57,4 @@
 
 
 
-<%- include ('../views/partials/footer.ejs') %>
+<%- include ('../partials/footer.ejs') %>

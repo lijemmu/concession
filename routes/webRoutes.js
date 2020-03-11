@@ -1,6 +1,8 @@
-var express = require("express"),
-    router = express.Router(),
-    Concession = require("../models/concession")
+var express      = require("express"),
+    Receipt      = require('../models/receipt')
+    Concession   = require("../models/concession")
+    router       = express.Router(),
+
 
 router.get("/login", function (req, res) {
     res.render("login")
@@ -11,7 +13,7 @@ router.get("/aboutPage", function(req,res){
 })
 
 router.get("/new", function (req, res) {
-    res.render("new")
+    res.render("./users/new")
 })
 
 router.get("/about", function (req, res) {
@@ -23,14 +25,13 @@ router.get("/home", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.render("home", { users : allusers });
+            res.render("./users/home", { users : allusers });
         }
     })
 })
 
 router.post("/concession", function (req, res) {
-    // we got the values from the form 
-    var name = req.body.studentName,
+    var name    = req.body.name,
         balance = req.body.balance,
         picture = req.body.picture;
 
@@ -54,7 +55,7 @@ router.get("/:id", function (req, res) {
         if(err){
             console.log(err)
         }else{
-            res.render("show", {user: user})
+            res.render("./users/show", {user: user})
         }
     })
 })
@@ -64,12 +65,13 @@ router.get("/:id/edit", function (req, res){
         if(err){
             console.log(err)
         } else {
-            res.render("edit", {user : foundUser})
+            res.render("./users/edit", {user : foundUser})
         }
     })
 })
 
 router.put("/:id", function(req, res){
+    console.log(req.body.updatedUser)
     Concession.findByIdAndUpdate(req.params.id, req.body.updatedUser, function(err, foundUser){
         if(err){
             console.log(err)
@@ -77,6 +79,19 @@ router.put("/:id", function(req, res){
             res.redirect("/home")
         }
     })
+})
+
+router.put("/receipt/:id", function(req, res){
+    console.log(req.body.receipt)
+    
+    // Concession.findById(req.params.id, function(err, user){
+    //     if(err){
+    //         console.log(err)
+    //         res.redirect("/home")
+    //     } else {
+    //         Receipt.create(req.body)
+    //     }
+    // })
 })
 
 
