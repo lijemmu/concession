@@ -2,32 +2,33 @@
 
 // Display the input button
 function showInput(userId, balance) {
+  // TODO: hide input when whitespace is clicked
+  // Prepare the necessary variables
   input = $('#' + userId + 'Input')
   label = $('#' + userId)
   actionName = $('input[name="receipt[action]"]')
   dateName =  $('input[name="receipt[date]"]')
   balanceName = $('input[name="receipt[balance]"]')
+
+  // Show the input and hide label
   input.removeClass('d-none')
   label.addClass('d-none')
 
-  // Get the Date, Action, and balance
+  // When enter key is pressed
   input.keypress(function (e) {
     var key = (event.keyCode ? event.keyCode : event.which);
     if (key == 13) {
+      // hide the input and show the label
       input.addClass('d-none')
       label.removeClass('d-none')
 
+      // prepare data to send to the server
       action = input.val()
       d = new Date()
       date = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()      
       newBalance = balance - action
-      // data = [date, action, newBalance]
-      // data ={
-      //   action: action,
-      //   date: date,
-      //   balance: newBalance
-      // }
-
+      
+      // Send data to the server
       actionName.val(action)
       dateName.val(date)
       balanceName.val(newBalance)

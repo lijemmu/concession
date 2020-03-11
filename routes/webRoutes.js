@@ -21,42 +21,60 @@ router.get("/about", function (req, res) {
 })
 
 router.get("/home", function (req, res) {
-    Concession.find({}, function(err, allusers){
+    Concession.find({}, function (err, allUsers) {
         if (err) {
             console.log(err);
         } else {
-            res.render("./users/home", { users : allusers });
+            res.render("./users/home", {users : allUsers})
         }
     })
 })
 
 router.post("/concession", function (req, res) {
-    var name    = req.body.name,
-        balance = req.body.balance,
-        picture = req.body.picture;
+    // Creating new user a user
+    var name           = req.body.name,
+        finalBalance   = req.body.balance,
+        picture        = req.body.picture,
+        createDate     = new Date(),
+        date           = (createDate.getMonth() + 1) + '/' + createDate.getDate() + '/' + createDate.getFullYear()
 
     var newUser = {
         name: name,
-        balance: balance,
-        picture: picture
+        picture: picture,
+        finalBalance: finalBalance
+    }
+    var newReceipt = {
+        date: date,
+        action: finalBalance, 
+        balance: finalBalance
     }
 
     Concession.create(newUser, function(err, user){
         if (err) {
             console.log(err);
         } else {
-            res.redirect("/home");
+            Receipt.create(newReceipt, function(err, addBalance){
+                if (err) {
+                    console.log(err);
+                } else {
+                    user.receipt.push(addBalance)
+                    user.save()
+                    res.redirect('/home')
+                }
+            })
         }
     })
 })
 
 router.get("/:id", function (req, res) {
-    Concession.findById(req.params.id, function(err, user){
-        if(err){
-            console.log(err)
-        }else{
+    Concession.findById(req.params.id)
+    .populate("receipt").exec(function(err,user){
+        if (err) {
+            console.log(err);
+        } else {
             res.render("./users/show", {user: user})
         }
+
     })
 })
 
@@ -71,7 +89,6 @@ router.get("/:id/edit", function (req, res){
 })
 
 router.put("/:id", function(req, res){
-    console.log(req.body.updatedUser)
     Concession.findByIdAndUpdate(req.params.id, req.body.updatedUser, function(err, foundUser){
         if(err){
             console.log(err)
@@ -81,17 +98,24 @@ router.put("/:id", function(req, res){
     })
 })
 
-router.put("/receipt/:id", function(req, res){
-    console.log(req.body.receipt)
-    
-    // Concession.findById(req.params.id, function(err, user){
-    //     if(err){
-    //         console.log(err)
-    //         res.redirect("/home")
-    //     } else {
-    //         Receipt.create(req.body)
-    //     }
-    // })
+router.post("/receipt/:id", function(req, res){
+    Concession.findById(req.params.id, function(err, user){
+        if(err){
+            console.log(err);
+            res.redirect("/home")
+        } else {
+            Receipt.create(req.body.receipt, function(err, newReceipt) {  
+                if (err) {
+                    console.log(err);
+                    res.redirect("/home")
+                }else {
+                    user.receipt.push(newReceipt)
+                    user.save()
+                    res.redirect('/home')
+                }
+            })
+        }
+    })
 })
 
 

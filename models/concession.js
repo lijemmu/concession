@@ -3,7 +3,7 @@ var mongoose = require("mongoose")
 var concessionsSchema = new mongoose.Schema({
     name: String,
     picture: String,
-    balance: String,
+    finalBalance: String,
     receipt: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Receipt"
