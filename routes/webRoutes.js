@@ -27,7 +27,7 @@ router.get("/search", function(req, res) {
             console.log("Could not found User");
             res.redirect("/home")
         } else {
-            res.redirect("/home")
+            res.render("./users/home", {users:foundUsers})
         }
     })
     
