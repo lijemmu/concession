@@ -33,6 +33,8 @@ router.get("/search", function(req, res) {
     
 })
 
+// TODO: A route to delete user
+
 router.get("/home", function (req, res) {
     Concession.find({}, function (err, allUsers) {
         if (err) {
