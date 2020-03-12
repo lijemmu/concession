@@ -10,7 +10,7 @@ var express          = require('express'),       // It is the frame work that we
     app              = express(); // Basically gives express another variable (app) which lets us say "app.use"
 
  // App Usage
-mongoose.connect("mongodb://localhost/concession", {useNewUrlParser: true})
+mongoose.connect("mongodb://localhost/concession", {useNewUrlParser: true, useUnifiedTopology: true})
 app.set('view engine', 'ejs');
 app.use(methodOverride("_method"))
 app.use(express.static(__dirname + "/public"));

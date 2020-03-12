@@ -20,6 +20,19 @@ router.get("/about", function (req, res) {
     res.render("about")
 })
 
+router.get("/search", function(req, res) {
+    search = req.query.searchedName
+    Concession.find({name:{$regex: new RegExp(search,"i")}}, function(err,foundUsers){
+        if (err) {
+            console.log("Could not found User");
+            res.redirect("/home")
+        } else {
+            res.redirect("/home")
+        }
+    })
+    
+})
+
 router.get("/home", function (req, res) {
     Concession.find({}, function (err, allUsers) {
         if (err) {
@@ -118,6 +131,8 @@ router.post("/receipt/:id", function(req, res){
         }
     })
 })
+
+
 
 
 module.exports = router
