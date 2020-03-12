@@ -2,17 +2,20 @@
 
 // Display the input button
 function showInput(userId, balance) {
-  // TODO: hide input when whitespace is clicked
   // Prepare the necessary variables
-  input = $('#' + userId + 'Input')
   label = $('#' + userId)
+  input = $('#' + userId + 'Input')
+  dateName = $('input[name="receipt[date]"]')
   actionName = $('input[name="receipt[action]"]')
-  dateName =  $('input[name="receipt[date]"]')
   balanceName = $('input[name="receipt[balance]"]')
+  newBalance = 0
 
   // Show the input and hide label
   input.removeClass('d-none')
   label.addClass('d-none')
+
+  // TODO: hide input when whitespace is clicked
+
 
   // When enter key is pressed
   input.keypress(function (e) {
@@ -22,20 +25,35 @@ function showInput(userId, balance) {
       input.addClass('d-none')
       label.removeClass('d-none')
 
-      // prepare data to send to the server
+      // Take appropriate action
       action = input.val()
-      d = new Date()
-      date = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() 
-      
-      // TODO: Add Money if statement 
-      // TODO: Send error when balance is negative
-      newBalance = balance - action
-      
-      // Send data to the server
-      actionName.val(action)
-      dateName.val(date)
-      balanceName.val(newBalance)
+      check = action.indexOf("+")
+      if (check != -1) {
+        action = action.slice(1)
+        action = Number(action)
+        balance = Number(balance)
+        newBalance = balance + action
+      } else {
+        newBalance = balance - action
+      }
 
+      // Get Today's Date
+      d = new Date()
+      date = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
+
+      // Send error when balance is negative
+      if (newBalance < 0) {
+        alert("GET MORE MONEY")
+        $('#' + userId + 'form').submit(function (e) {
+          input.val("")
+          e.preventDefault();
+        })
+      } else {
+        // Send data to the server
+        dateName.val(date)
+        balanceName.val(newBalance)
+        actionName.val(action)
+      }
     }
   })
 }
