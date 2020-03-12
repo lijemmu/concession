@@ -109,6 +109,7 @@ router.post("/receipt/:id", function(req, res){
                     console.log(err);
                     res.redirect("/home")
                 }else {
+                    user.finalBalance = req.body.receipt.balance
                     user.receipt.push(newReceipt)
                     user.save()
                     res.redirect('/home')

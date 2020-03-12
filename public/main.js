@@ -25,7 +25,10 @@ function showInput(userId, balance) {
       // prepare data to send to the server
       action = input.val()
       d = new Date()
-      date = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()      
+      date = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() 
+      
+      // TODO: Add Money if statement 
+      // TODO: Send error when balance is negative
       newBalance = balance - action
       
       // Send data to the server
