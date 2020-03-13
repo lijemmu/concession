@@ -14,7 +14,13 @@ function showInput(userId, balance) {
   input.removeClass('d-none')
   label.addClass('d-none')
 
-  // TODO: hide input when whitespace is clicked
+  // hide input when whitespace is clicked
+  $('body').click(function (e) {
+    if (e.target == this) {
+      input.addClass('d-none')
+      label.removeClass('d-none')
+    }
+  })
 
 
   // When enter key is pressed
@@ -26,6 +32,7 @@ function showInput(userId, balance) {
       label.removeClass('d-none')
 
       // Take appropriate action
+      // TODO: Make sure text was not given to you. 
       action = input.val()
       check = action.indexOf("+")
       if (check != -1) {
