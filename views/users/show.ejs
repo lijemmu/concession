@@ -19,11 +19,10 @@
             </tr>
         </thead>
         <tbody>
-            <!-- TODO: Modify the action to display the right sign(+/-) -->
             <% user.receipt.forEach(function(e){ %>
             <tr>
                 <th> <%= e.date %> </th>
-                <th> + <%= e.action %> </th>
+                <th> <%= e.actionSign %> $<%= e.action %> </th>
                 <th> $ <%= e.balance %> </th>
             </tr>
             <% }) %>

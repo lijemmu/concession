@@ -1,3 +1,10 @@
+// Views > Partials > Nav bar
+// Change the active class based on url
+$(document).ready(function() {
+  $('li.active').removeClass('active');
+  $('a[href="' + location.pathname + '"]').closest('li').addClass('active'); 
+});
+
 // Views > Home
 
 // Display the input button
@@ -8,6 +15,12 @@ function showInput(userId, balance) {
   dateName = $('input[name="receipt[date]"]')
   actionName = $('input[name="receipt[action]"]')
   balanceName = $('input[name="receipt[balance]"]')
+  actionSign = $('input[name="receipt[actionSign]"]')
+  dontSubmit = $('#' + userId + 'form').submit(function (e) {
+    input.val("")
+    e.stopPropagation();
+    e.preventDefault();
+  })
   newBalance = 0
 
   // Show the input and hide label
@@ -32,7 +45,6 @@ function showInput(userId, balance) {
       label.removeClass('d-none')
 
       // Take appropriate action
-      // TODO: Make sure text was not given to you. 
       action = input.val()
       check = action.indexOf("+")
       if (check != -1) {
@@ -40,26 +52,32 @@ function showInput(userId, balance) {
         action = Number(action)
         balance = Number(balance)
         newBalance = balance + action
+        actionSigned = '+'
       } else {
         newBalance = balance - action
+        actionSigned = '-'
       }
 
       // Get Today's Date
       d = new Date()
       date = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
 
-      // Send error when balance is negative
+      // Check errors if any
       if (newBalance < 0) {
         alert("GET MORE MONEY")
-        $('#' + userId + 'form').submit(function (e) {
-          input.val("")
-          e.preventDefault();
-        })
+        dontSubmit
+      } else if (action == 0) {
+        alert("Please insert amount")
+        dontSubmit
+      } else if (typeof action === 'string') {
+        alert("Please insert a number")
+        dontSubmit
       } else {
         // Send data to the server
         dateName.val(date)
         balanceName.val(newBalance)
         actionName.val(action)
+        actionSign.val(actionSigned)
       }
     }
   })

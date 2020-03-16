@@ -28,13 +28,12 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- TODO: Make the active class change based on the page -->
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="/aboutPage">About</a>
+          <a class="nav-link" id="home" href="/home">Home</a>
+        </li>
+        <li class="nav-item  about">
+          <a class="nav-link" id="about" href="/aboutPage">About</a>
         </li>
       </ul>
       <ul>
@@ -47,3 +46,4 @@
   </nav>
 
 </body>
+<%- include ('../partials/footer.ejs') %>
