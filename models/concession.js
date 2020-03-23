@@ -6,8 +6,11 @@ var concessionsSchema = new mongoose.Schema({
     finalBalance: String,
     receipt: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Receipt"
+        ref: "Receipt",
+        searchedDate:[],
+        flag: Boolean
     }]
+    
 });
 
 module.exports = mongoose.model("Concession", concessionsSchema)

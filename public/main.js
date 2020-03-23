@@ -1,11 +1,30 @@
 // Views > Partials > Nav bar
 // Change the active class based on url
-$(document).ready(function() {
+$(document).ready(function () {
   $('li.active').removeClass('active');
-  $('a[href="' + location.pathname + '"]').closest('li').addClass('active'); 
+  $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
 });
 
-// Views > Home
+// Views > show > pagination
+function pageTab(rowsTotal) {
+  rowsShown = 5
+  numPages = rowsTotal / rowsShown
+  for(i = 0; i < numPages; i++){
+    pageNum = i + 1
+    $("#pages").append('<li class="page-item"><a class="page-link" href="#" rel="' + i +'">' + pageNum +'</a></li>')
+  }
+  $("#table tbody tr").hide()
+  $("#table tbody tr").slice(0, rowsShown).show()
+  $('#pages li:first').addClass('active')
+  $('#pages a').bind('click', function() {
+    $("#pages li").removeClass('active')
+    $(this).closest('li').addClass('active')
+    currPage= $(this).attr('rel')
+    startItem = currPage * rowsShown
+    endItem = startItem + rowsShown
+    $('#table tbody tr').hide().slice(startItem, endItem).show()
+  })
+}
 
 // Display the input button
 function showInput(userId, balance) {
@@ -16,11 +35,6 @@ function showInput(userId, balance) {
   actionName = $('input[name="receipt[action]"]')
   balanceName = $('input[name="receipt[balance]"]')
   actionSign = $('input[name="receipt[actionSign]"]')
-  dontSubmit = $('#' + userId + 'form').submit(function (e) {
-    input.val("")
-    e.stopPropagation();
-    e.preventDefault();
-  })
   newBalance = 0
 
   // Show the input and hide label
@@ -54,8 +68,20 @@ function showInput(userId, balance) {
         newBalance = balance + action
         actionSigned = '+'
       } else {
-        newBalance = balance - action
-        actionSigned = '-'
+        action = Number(action)
+        balance = Number(balance)
+        if (!action) {
+          alert('input a number')
+          $('#' + userId + 'form').submit(function (e) {
+            input.val("")
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          })
+        } else {
+          newBalance = balance - action
+          actionSigned = '-'
+        }
+
       }
 
       // Get Today's Date
@@ -65,13 +91,18 @@ function showInput(userId, balance) {
       // Check errors if any
       if (newBalance < 0) {
         alert("GET MORE MONEY")
-        dontSubmit
+        $('#' + userId + 'form').submit(function (e) {
+          input.val("")
+          e.stopPropagation();
+          e.preventDefault();
+        })
       } else if (action == 0) {
         alert("Please insert amount")
-        dontSubmit
-      } else if (typeof action === 'string') {
-        alert("Please insert a number")
-        dontSubmit
+        $('#' + userId + 'form').submit(function (e) {
+          input.val("")
+          e.stopPropagation();
+          e.preventDefault();
+        })
       } else {
         // Send data to the server
         dateName.val(date)
