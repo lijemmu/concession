@@ -5,8 +5,10 @@
         <a href="/new" id="addStudent" class="mr-4 mt-5">
             <i class="fas fa-plus fa-9x text-info"></i>
         </a>
-        <form action="/<%= users._id %>/search" method="GET" class="form-inline d-none d-lg-block" style="margin-top: 95px;">
-            <input type="search" name="searchedName" class="form-control mr-3 py-3 text-center" style="width: 500px;"placeholder="Search" aria-label="Search">
+        <form action="/sfgfads/search" method="GET" class="form-inline d-none d-lg-block"
+            style="margin-top: 95px;">
+            <input type="search" name="searchedName" class="form-control mr-3 py-3 text-center" style="width: 500px;"
+                placeholder="Search" aria-label="Search">
         </form>
     </div>
 </div>
@@ -17,11 +19,14 @@
         <!-- TODO: Making sure all cards are the same sizes -->
         <% users.forEach(function(user){ %>
         <div class="col-lg-4 mb-3">
-            <div class="card mb-2" style="width: 21rem; height: 25rem;">
+            <div class="card mb-2" style="width: 21rem; height: 30% !important;">
                 <a href="/<%= user._id %>">
-                    <img src="<%= user.picture %>" onerror="this.src='https://source.unsplash.com/1600x900/?nature,water'" class="card-img-top">
+                    <img src="<%= user.picture %>"
+                        onerror="this.src='https://source.unsplash.com/1600x900/?nature,water'" style="width: 100% !important;
+                        height: 20vw !important; 
+                        object-fit: cover !important;">
                 </a>
-                <div class="card-body text-center">
+                <div class="card-body text-center align-middle">
                     <a href="/<%= user._id %>/edit" class="edit">
                         <h5 class="card-title"><%= user.name%></h5>
                     </a>
@@ -35,6 +40,7 @@
                         <input type="hidden" name="receipt[balance]">
                         <input type="hidden" name="receipt[actionSign]">
                     </form>
+                    <a href="/<%= user._id %>/delete" id="" class="d-flex justify-content-end mb-3 mr-3 deleteBtn"><i class="fas fa-user-minus bg-light text-danger"></i></a>
                 </div>
             </div>
         </div>
@@ -42,16 +48,21 @@
     </div>
 </div>
 
-<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" 
-aria-labelledby="modalAdd" aria-hidden="true">
+<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="modalAdd" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog"     
-aria-labelledby="modalAdd" aria-hidden="true">
+<div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="modalAdd" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteConfig" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         </div>

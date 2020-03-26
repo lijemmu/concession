@@ -145,3 +145,8 @@ $('#aboutPage').on('click', function (e) {
   e.preventDefault();
   $('#aboutPageModal').modal('show').find('.modal-content').load($(this).attr('href'))
 })
+
+$('.deleteBtn').on('click', function(e) {
+  e.preventDefault();
+  $('#deleteConfig').modal('show').find('.modal-content').load($(this).attr('href'))
+})

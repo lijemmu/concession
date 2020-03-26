@@ -21,20 +21,34 @@ router.get("/about", function (req, res) {
 })
 
 
+// router.get("/:id/search", function (req, res) {
+//     searchName = req.query.searchedName
+//     if (searchName) {Concession.find({name: {$regex: new RegExp(searchName, "i")}}, function (err, foundUsers) {
+//         if (err) {
+//          console.log("Could not find User");
+//         res.redirect("/home")
+//         } else {
+//          res.render("./users/home", {users: foundUsers})
+//         }
+//       })
+//     } 
+// })
+
+
+
 // TODO: flash no user if no user is found
 router.get("/:id/search", function (req, res) {
     searchName = req.query.searchedName
     searchDate = req.query.searchedDate
-    if (searchName) {Concession.find({name: {$regex: new RegExp(searchName, "i")}}, function (err, foundUsers) {
-            if (err) {
-                console.log("Could not found User");
-                res.redirect("/home")
+    if (searchName) {
+        Concession.find({name: {$regex: new RegExp(searchName, "i")}}, function (err, foundUsers) {
+         if (err) {
+             console.log("Could not find User");
+            res.redirect("/home")
             } else {
-                res.render("./users/home", {
-                    users: foundUsers
-                })
-            }
-        })
+            res.render("./users/home", {users: foundUsers})
+        }
+      })
     } else {
         Concession.findById(req.params.id).populate('receipt').exec((err, userFound) => {
             if (err) {throw err}
@@ -55,7 +69,6 @@ router.get("/:id/search", function (req, res) {
 })
 
 
-// TODO: A route to delete user
 
 router.get("/home", function (req, res) {
     Concession.find({}, function (err, allUsers) {
@@ -98,6 +111,7 @@ router.post("/concession", function (req, res) {
                 } else {
                     user.receipt.push(addBalance)
                     user.save()
+                    req.flash('success', 'Successfully created a user')
                     res.redirect('/home')
                 }
             })
@@ -131,6 +145,31 @@ router.get("/:id/edit", function (req, res) {
     })
 })
 
+router.get("/:id/delete", function (req, res) {
+    Concession.findById(req.params.id, function (err, foundUser){
+        if (err) {
+            console.log(err)
+        } else {
+            res.render("./users/delete", {
+                user: foundUser
+            }) 
+        }
+    })
+})
+
+
+router.delete("/:id", function(req,res){
+    Concession.findByIdAndDelete(req.params.id, function (err, foundUser) {
+        if (err) throw err
+        Receipt.deleteMany({_id:{$in:foundUser.receipt}}, (err,deletedUser) =>{
+            if(err) throw err
+            res.redirect("/home")
+        })      
+      })  
+    })
+
+
+
 router.put("/:id", function (req, res) {
     Concession.findByIdAndUpdate(req.params.id, req.body.updatedUser, function (err, foundUser) {
         if (err) {
@@ -140,6 +179,7 @@ router.put("/:id", function (req, res) {
         }
     })
 })
+
 
 router.post("/receipt/:id", function (req, res) {
     Concession.findById(req.params.id, function (err, user) {
@@ -161,6 +201,7 @@ router.post("/receipt/:id", function (req, res) {
         }
     })
 })
+
 
 
 

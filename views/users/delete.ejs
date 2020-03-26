@@ -1,0 +1,28 @@
+<head>
+    <!-- BootStrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class=" modal-header modal-body d-flex justify-content-center font-weight-bold text-danger" > 
+            <div class="modal-title">
+                <h5> Do you want to delete <%= user.name %>  </h5>
+            </div>
+            </div>
+            <div class=" modal-body d-flex justify-content-center">
+                <p class="font-weight-bold">Are you sure you want to delete this coustumer</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="/<%= user._id %>?_method=DELETE" >
+                    <button type="submit" class="btn btn-outline-danger text-center delete">YES, DELETE</button>
+                </form>
+                <button data-dismiss="modal" type="submit" class="btn btn-outline-primary text-center">NO</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<%- include ('../partials/footer.ejs') %>
