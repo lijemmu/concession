@@ -12,29 +12,22 @@ router.get("/aboutPage", function (req, res) {
     res.render("aboutPage")
 })
 
-
-
 // Add a user to the db
 router.post("/register", function (req, res) {
-    var newUser = new Accounts({
-        username: req.body.schoolName,
-    })
-    console.log(newUser)
-
-    Accounts.register(newUser, req.body.password, function (err, userCreated) {
+    // username = new Accounts({username: req.body.schoolName})
+    Accounts.register(new Accounts({
+        username: req.body.username
+    }), req.body.password, function (err, accounts) {
         if (err) {
-            console.log(err)
             req.flash("error", err.message)
-            res.redirect("/aboutPage")
-        } else {
-            passport.authenticate("local")(req, res, function () {
-                req.flash("success", "Welcome to AYG " + req.user.username)
-                res.redirect("/")
-            })
+            res.redirect("/")
         }
+        passport.authenticate("local")(req, res, function () {
+            req.flash("success", "Welcome to AYG ")
+            res.redirect("/accounts/" + req.user._id + "/concessions/home/")
+        })
     })
 })
-
 
 
 // Authenticate the user from db / Login

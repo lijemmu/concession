@@ -1,20 +1,15 @@
 var express = require("express")
 Concession = require("../models/concession")
 Receipt = require('../models/receipt')
-// Accounts = require("../models/accounts")
+Accounts = require("../models/accounts")
 router = express.Router()
 
 
 // Show all users
 router.get("/home", function (req, res) {
-    Concession.find({}, function (err, allUsers) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("./users/home", {
-                users: allUsers
-            })
-        }
+    Accounts.findById(req.user._id).populate("concession").exec((err,userFound)=>{
+        if(err) console.log(err)
+        res.render("./users/home", {users: userFound.concession})
     })
 })
 
@@ -31,11 +26,6 @@ router.get("/new", function (req, res) {
 router.get("/about", function (req, res) {
     res.render("about")
 })
-
-
-
-
-
 
 router.get("/:id/search", function (req, res) {
     searchName = req.query.searchedName
@@ -85,9 +75,6 @@ router.get("/:id/search", function (req, res) {
 
 
 })
-
-
-
 
 
 router.post("/", function (req, res) {
