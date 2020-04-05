@@ -1,75 +1,11 @@
-var express = require("express"),
-    Receipt = require('../models/receipt')
+var express = require("express")
 Concession = require("../models/concession")
-router = express.Router(),
+Receipt = require('../models/receipt')
+// Accounts = require("../models/accounts")
+router = express.Router()
 
 
-    router.get("/login", function (req, res) {
-        res.render("login")
-    })
-
-router.get("/aboutPage", function (req, res) {
-    res.render("aboutPage")
-})
-
-router.get("/new", function (req, res) {
-    res.render("./users/new")
-})
-
-router.get("/about", function (req, res) {
-    res.render("about")
-})
-
-
-// router.get("/:id/search", function (req, res) {
-//     searchName = req.query.searchedName
-//     if (searchName) {Concession.find({name: {$regex: new RegExp(searchName, "i")}}, function (err, foundUsers) {
-//         if (err) {
-//          console.log("Could not find User");
-//         res.redirect("/home")
-//         } else {
-//          res.render("./users/home", {users: foundUsers})
-//         }
-//       })
-//     } 
-// })
-
-
-
-// TODO: flash no user if no user is found
-router.get("/:id/search", function (req, res) {
-    searchName = req.query.searchedName
-    searchDate = req.query.searchedDate
-    if (searchName) {
-        Concession.find({name: {$regex: new RegExp(searchName, "i")}}, function (err, foundUsers) {
-         if (err) {
-             console.log("Could not find User");
-            res.redirect("/home")
-            } else {
-            res.render("./users/home", {users: foundUsers})
-        }
-      })
-    } else {
-        Concession.findById(req.params.id).populate('receipt').exec((err, userFound) => {
-            if (err) {throw err}
-            userFound.receipt.searchedDate= []
-            for(data of userFound.receipt){
-                search = new RegExp(searchDate,'i')
-                if(search.test(data.date)){
-                    userFound.receipt.searchedDate.push(data)
-                }
-            }
-            userFound.receipt.flag = true
-            userFound.save()
-            res.render("./users/show", {user: userFound})
-        })
-    }
-
-
-})
-
-
-
+// Show all users
 router.get("/home", function (req, res) {
     Concession.find({}, function (err, allUsers) {
         if (err) {
@@ -82,8 +18,81 @@ router.get("/home", function (req, res) {
     })
 })
 
-router.post("/concession", function (req, res) {
+
+router.get("/aboutPage", function (req, res) {
+    res.render("aboutPage")
+})
+
+// Show modal to add a user
+router.get("/new", function (req, res) {
+    res.render("./users/new")
+})
+
+router.get("/about", function (req, res) {
+    res.render("about")
+})
+
+
+
+
+
+
+router.get("/:id/search", function (req, res) {
+    searchName = req.query.searchedName
+    searchDate = req.query.searchedDate
+    if (searchName) {
+        Concession.find({
+            name: {
+                $regex: new RegExp(searchName, "i")
+            }
+        }, function (err, foundUsers) {
+            if (err) {
+                console.log(err)
+                res.redirect("/home")
+            } else if (foundUsers.length == 0) {
+                req.flash('error', 'No user found')
+                res.redirect('/home')
+            } else if (foundUsers) {
+                // console.log("I am here")
+                // console.log(foundUsers)
+                res.render("./users/home", {
+                    users: foundUsers
+                })
+            }
+        })
+    } else if (searchDate) {
+        Concession.findById(req.params.id).populate('receipt').exec((err, userFound) => {
+            if (err) {
+                throw err
+            }
+            userFound.receipt.searchedDate = []
+            for (data of userFound.receipt) {
+                search = new RegExp(searchDate, 'i')
+                if (search.test(data.date)) {
+                    userFound.receipt.searchedDate.push(data)
+                }
+            }
+            userFound.receipt.flag = true
+            userFound.save()
+            res.render("./users/show", {
+                user: userFound
+            })
+        })
+    } else {
+        req.flash('error', 'No user found')
+        res.redirect("/home")
+    }
+
+
+})
+
+
+
+
+
+router.post("/", function (req, res) {
     // Creating new user a user
+    console.log(req.body)
     var name = req.body.name,
         finalBalance = req.body.balance,
         picture = req.body.picture,
@@ -112,7 +121,7 @@ router.post("/concession", function (req, res) {
                     user.receipt.push(addBalance)
                     user.save()
                     req.flash('success', 'Successfully created a user')
-                    res.redirect('/home')
+                    res.redirect("/accounts/" + req.user._id + "/concessions/home/")
                 }
             })
         }
@@ -146,27 +155,31 @@ router.get("/:id/edit", function (req, res) {
 })
 
 router.get("/:id/delete", function (req, res) {
-    Concession.findById(req.params.id, function (err, foundUser){
+    Concession.findById(req.params.id, function (err, foundUser) {
         if (err) {
             console.log(err)
         } else {
             res.render("./users/delete", {
                 user: foundUser
-            }) 
+            })
         }
     })
 })
 
 
-router.delete("/:id", function(req,res){
+router.delete("/:id", function (req, res) {
     Concession.findByIdAndDelete(req.params.id, function (err, foundUser) {
         if (err) throw err
-        Receipt.deleteMany({_id:{$in:foundUser.receipt}}, (err,deletedUser) =>{
-            if(err) throw err
+        Receipt.deleteMany({
+            _id: {
+                $in: foundUser.receipt
+            }
+        }, (err, deletedUser) => {
+            if (err) throw err
             res.redirect("/home")
-        })      
-      })  
+        })
     })
+})
 
 
 

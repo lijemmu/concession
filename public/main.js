@@ -1,4 +1,10 @@
-// Views > Partials > Nav bar
+// Confirm Password on Login
+regPassword = $('#regPassword').val()
+confPassword = $('#confPassword').val()
+
+
+
+
 // Change the active class based on url
 $(document).ready(function () {
   $('li.active').removeClass('active');
@@ -9,17 +15,17 @@ $(document).ready(function () {
 function pageTab(rowsTotal) {
   rowsShown = 5
   numPages = rowsTotal / rowsShown
-  for(i = 0; i < numPages; i++){
+  for (i = 0; i < numPages; i++) {
     pageNum = i + 1
-    $("#pages").append('<li class="page-item"><a class="page-link" href="#" rel="' + i +'">' + pageNum +'</a></li>')
+    $("#pages").append('<li class="page-item"><a class="page-link" href="#" rel="' + i + '">' + pageNum + '</a></li>')
   }
   $("#table tbody tr").hide()
   $("#table tbody tr").slice(0, rowsShown).show()
   $('#pages li:first').addClass('active')
-  $('#pages a').bind('click', function() {
+  $('#pages a').bind('click', function () {
     $("#pages li").removeClass('active')
     $(this).closest('li').addClass('active')
-    currPage= $(this).attr('rel')
+    currPage = $(this).attr('rel')
     startItem = currPage * rowsShown
     endItem = startItem + rowsShown
     $('#table tbody tr').hide().slice(startItem, endItem).show()
@@ -71,7 +77,8 @@ function showInput(userId, balance) {
         action = Number(action)
         balance = Number(balance)
         if (!action) {
-          alert('input a number')
+          $(".message").addClass('alert alert-danger')
+            .html('Please Insert A Number').delay(2000).slideUp(1000);
           $('#' + userId + 'form').submit(function (e) {
             input.val("")
             e.stopImmediatePropagation();
@@ -90,20 +97,26 @@ function showInput(userId, balance) {
 
       // Check errors if any
       if (newBalance < 0) {
-        alert("GET MORE MONEY")
+        $(".message").addClass('alert alert-danger')
+        .html("Get more money, refresh").delay(2000).slideUp(1000);
         $('#' + userId + 'form').submit(function (e) {
           input.val("")
           e.stopPropagation();
           e.preventDefault();
         })
-      } else if (action == 0) {
-        alert("Please insert amount")
+      } else if (action == 0) { 
+          setTimeout(() => {
+            location.reload(true);
+            $(".message").addClass('alert alert-danger')
+          .html('Please Insert More Than Zero').delay(2000).slideUp(1000);
+          }, 3000);
         $('#' + userId + 'form').submit(function (e) {
           input.val("")
           e.stopPropagation();
           e.preventDefault();
         })
       } else {
+
         // Send data to the server
         dateName.val(date)
         balanceName.val(newBalance)
@@ -146,7 +159,7 @@ $('#aboutPage').on('click', function (e) {
   $('#aboutPageModal').modal('show').find('.modal-content').load($(this).attr('href'))
 })
 
-$('.deleteBtn').on('click', function(e) {
+$('.deleteBtn').on('click', function (e) {
   e.preventDefault();
   $('#deleteConfig').modal('show').find('.modal-content').load($(this).attr('href'))
 })
