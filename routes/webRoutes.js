@@ -1,19 +1,21 @@
 var express = require("express")
-Concession = require("../models/concession")
+Students = require("../models/students")
 Receipt = require('../models/receipt')
-Accounts = require("../models/accounts")
+Schools = require("../models/schools")
 router = express.Router()
 
 
 // Show all users
 router.get("/home", function (req, res) {
-    Accounts.findById(req.user._id).populate("concession").exec((err,userFound)=>{
-        if(err) console.log(err)
-        res.render("./users/home", {users: userFound.concession})
-    })
+    Schools.findById(req.user._id).populate("students").exec((err, userFound) => {
+        if (err) console.log(err)
+        res.render("./users/home", {
+            users: userFound.students
+        })
+    }) // 
 })
 
-
+// show about page
 router.get("/aboutPage", function (req, res) {
     res.render("aboutPage")
 })
@@ -27,31 +29,30 @@ router.get("/about", function (req, res) {
     res.render("about")
 })
 
+// route for search
 router.get("/:id/search", function (req, res) {
     searchName = req.query.searchedName
     searchDate = req.query.searchedDate
     if (searchName) {
-        Concession.find({
+        Students.find({
             name: {
                 $regex: new RegExp(searchName, "i")
             }
         }, function (err, foundUsers) {
             if (err) {
                 console.log(err)
-                res.redirect("/home")
+                res.redirect("/schools/" + req.user._id + "/students/home/")
             } else if (foundUsers.length == 0) {
                 req.flash('error', 'No user found')
-                res.redirect('/home')
+                res.redirect("/schools/" + req.user._id + "/students/home/")
             } else if (foundUsers) {
-                // console.log("I am here")
-                // console.log(foundUsers)
                 res.render("./users/home", {
                     users: foundUsers
                 })
             }
         })
     } else if (searchDate) {
-        Concession.findById(req.params.id).populate('receipt').exec((err, userFound) => {
+        Students.findById(req.params.id).populate('receipt').exec((err, userFound) => {
             if (err) {
                 throw err
             }
@@ -70,16 +71,15 @@ router.get("/:id/search", function (req, res) {
         })
     } else {
         req.flash('error', 'No user found')
-        res.redirect("/home")
+        res.redirect("/schools/" + req.user._id + "/students/home/")
     }
 
 
 })
 
-
+// Creating new user a user
 router.post("/", function (req, res) {
-    // Creating new user a user
-    console.log(req.body)
+
     var name = req.body.name,
         finalBalance = req.body.balance,
         picture = req.body.picture,
@@ -97,26 +97,31 @@ router.post("/", function (req, res) {
         balance: finalBalance
     }
 
-    Concession.create(newUser, function (err, user) {
-        if (err) {
-            console.log(err);
-        } else {
-            Receipt.create(newReceipt, function (err, addBalance) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    user.receipt.push(addBalance)
-                    user.save()
-                    req.flash('success', 'Successfully created a user')
-                    res.redirect("/accounts/" + req.user._id + "/concessions/home/")
-                }
-            })
-        }
+    Schools.findById(req.user._id, function (err, school) {
+        Students.create(newUser, function (err, user) {
+            if (err) {
+                console.log(err);
+            } else {
+                school.students.push(user)
+                school.save()
+                Receipt.create(newReceipt, function (err, addBalance) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        user.receipt.push(addBalance)
+                        user.save()
+                        req.flash('success', 'Successfully created a user')
+                        res.redirect("/schools/" + req.user._id + "/students/home/")
+                    }
+                })
+            }
+        })
     })
 })
 
+// render the reciept page for the student
 router.get("/:id", function (req, res) {
-    Concession.findById(req.params.id)
+    Students.findById(req.params.id)
         .populate("receipt").exec(function (err, user) {
             if (err) {
                 console.log(err);
@@ -124,13 +129,16 @@ router.get("/:id", function (req, res) {
                 res.render("./users/show", {
                     user: user
                 })
+                console.log('break')
+                console.log(user)
             }
 
         })
 })
 
+// edit student modal
 router.get("/:id/edit", function (req, res) {
-    Concession.findById(req.params.id, function (err, foundUser) {
+    Students.findById(req.params.id, function (err, foundUser) {
         if (err) {
             console.log(err)
         } else {
@@ -141,8 +149,9 @@ router.get("/:id/edit", function (req, res) {
     })
 })
 
+// Delete a student modal
 router.get("/:id/delete", function (req, res) {
-    Concession.findById(req.params.id, function (err, foundUser) {
+    Students.findById(req.params.id, function (err, foundUser) {
         if (err) {
             console.log(err)
         } else {
@@ -153,9 +162,9 @@ router.get("/:id/delete", function (req, res) {
     })
 })
 
-
+// action to delete
 router.delete("/:id", function (req, res) {
-    Concession.findByIdAndDelete(req.params.id, function (err, foundUser) {
+    Students.findByIdAndDelete(req.params.id, function (err, foundUser) {
         if (err) throw err
         Receipt.deleteMany({
             _id: {
@@ -163,39 +172,40 @@ router.delete("/:id", function (req, res) {
             }
         }, (err, deletedUser) => {
             if (err) throw err
-            res.redirect("/home")
+            res.redirect("/schools/" + req.user._id + "/students/home/")
         })
     })
 })
 
 
-
+// update user
 router.put("/:id", function (req, res) {
-    Concession.findByIdAndUpdate(req.params.id, req.body.updatedUser, function (err, foundUser) {
+    Students.findByIdAndUpdate(req.params.id, req.body.updatedUser, function (err, foundUser) {
         if (err) {
             console.log(err)
         } else {
-            res.redirect("/home")
+            res.redirect("/schools/" + req.user._id + "/students/home/")
         }
     })
 })
 
-
+// create students reciept
 router.post("/receipt/:id", function (req, res) {
-    Concession.findById(req.params.id, function (err, user) {
+    Students.findById(req.params.id, function (err, user) {
+        console.log('user')
         if (err) {
             console.log(err);
-            res.redirect("/home")
+            res.redirect("/schools/" + req.user._id + "/students/home/")
         } else {
             Receipt.create(req.body.receipt, function (err, newReceipt) {
                 if (err) {
                     console.log(err);
-                    res.redirect("/home")
+                    res.redirect("/schools/" + req.user._id + "/students/home/")
                 } else {
                     user.finalBalance = req.body.receipt.balance
                     user.receipt.push(newReceipt)
                     user.save()
-                    res.redirect('/home')
+                    res.redirect("/schools/" + req.user._id + "/students/home/")
                 }
             })
         }

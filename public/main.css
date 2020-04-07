@@ -32,12 +32,12 @@ hr{
 }
 
 
-.loginCard {
+.registerCard {
     height: 506;
     width: 50%;
     margin-left: 55%;
     margin-top: -38%;
-
+    opacity: .9;
 }
 
 .card-header {

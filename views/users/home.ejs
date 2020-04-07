@@ -8,11 +8,11 @@
 
     <div class="container">
         <div class="row mb-5" style="margin-left: 130px;">
-            <a href="/accounts/<%= currentUser._id %>/concessions/new" id="addStudent" class="mr-4 mt-5">
+            <a href="/schools/<%= currentUser._id %>/students/new" id="addStudent" class="mr-4 mt-5">
                 <i class="fas fa-plus fa-9x text-info"></i>
                 
             </a>
-            <form action="/sfgfads/search" method="GET" class="form-inline d-none d-lg-block" style="margin-top: 95px;">
+            <form action="/schools/<%= currentUser._id %>/students/sfgfads/search" method="GET" class="form-inline d-none d-lg-block" style="margin-top: 95px;">
                 <input type="search" name="searchedName" class="form-control mr-3 py-3 text-center"
                     style="width: 500px;" placeholder="Search" aria-label="Search">
             </form>
@@ -25,27 +25,27 @@
             <% users.forEach(function(user){ %>
             <div class="col-lg-4 mb-3">
                 <div class="card mb-2" style="width: 21rem; height: 30% !important;">
-                    <a href="/<%= user._id %>">
+                    <a href="/schools/<%= currentUser._id %>/students/<%= user._id %>/">
                         <img src="<%= user.picture %>"
                             onerror="this.src='https://source.unsplash.com/1600x900/?dogs'" style="width: 100% !important;
                         height: 20vw !important; 
                         object-fit: cover !important;">
                     </a>
                     <div class="card-body text-center align-middle">
-                        <a href="/<%= user._id %>/edit" class="edit">
+                        <a href="/schools/<%= currentUser._id %>/students/<%= user._id %>/edit" class="edit">
                             <h5 class="card-title"><%= user.name%></h5>
                         </a>
                         <a onclick="showInput('<%= user._id %>', '<%= user.finalBalance %>')">
                             <h6 id="<%= user._id %>" class="card-subtitle mb-2 text-muted">$<%= user.finalBalance%></h6>
                         </a>
-                        <form action="/receipt/<%= user._id %>" method="post" id="<%= user._id %>form">
+                        <form action="/schools/<%= currentUser._id %>/students/receipt/<%= user._id %>" method="post" id="<%= user._id %>form">
                             <!-- TODO Auto select action input -->
                             <input id="<%= user._id %>Input" name="receipt[action]" type="text" class="w-50 d-none">
                             <input type="hidden" name="receipt[date]">
                             <input type="hidden" name="receipt[balance]">
                             <input type="hidden" name="receipt[actionSign]">
                         </form>
-                        <a href="/<%= user._id %>/delete" id=""
+                        <a href="/schools/<%= currentUser._id %>/students/<%= user._id %>/delete" id=""
                             class="d-flex justify-content-end mb-3 mr-3 deleteBtn"><i
                                 class="fas fa-user-minus bg-light text-danger"></i></a>
                     </div>

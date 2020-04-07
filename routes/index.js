@@ -1,6 +1,6 @@
 var express = require('express'),
     passport = require('passport'),
-    Accounts = require('../models/accounts'),
+    Schools = require('../models/schools'),
     router = express.Router();
 
 
@@ -14,17 +14,16 @@ router.get("/aboutPage", function (req, res) {
 
 // Add a user to the db
 router.post("/register", function (req, res) {
-    // username = new Accounts({username: req.body.schoolName})
-    Accounts.register(new Accounts({
+    Schools.register(new Schools({
         username: req.body.username
-    }), req.body.password, function (err, accounts) {
+    }), req.body.password, function (err, schools) {
         if (err) {
             req.flash("error", err.message)
             res.redirect("/")
         }
         passport.authenticate("local")(req, res, function () {
             req.flash("success", "Welcome to AYG ")
-            res.redirect("/accounts/" + req.user._id + "/concessions/home/")
+            res.redirect("/schools/" + req.user._id + "/students/home/")
         })
     })
 })
@@ -36,8 +35,7 @@ router.post('/login', passport.authenticate('local', {
     failureFlash: "Wrong School Name or Password"
 }), (req, res) => {
     req.flash("success", "Welcome back " + req.body.username)
-    console.log(req.user._id)
-    res.redirect("/accounts/" + req.user._id + "/concessions/home/")
+    res.redirect("/schools/" + req.user._id + "/students/home/")
     // /accounts/" + req.user._id + "/concessions
 })
 

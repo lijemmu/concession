@@ -12,7 +12,7 @@
             <h3 class="modal-title">Add a new student</h3>
         </div>
         <div class="modal-body text-center">
-            <form method="POST" action="/accounts/<%= currentUser._id %>/concessions">
+            <form method="POST" action="/schools/<%= currentUser._id %>/students">
                 <div class="form-group">
                     <input type="text" class="text-center form-control" name="name" placeholder="Name" aria-describedby="emailHelp" required>
                 </div>

@@ -10,9 +10,9 @@ indexRouter           = require("./routes/index"),
 expressSession        = require('express-session'),
 methodOverride        = require('method-override'),
 Receipt               = require("./models/receipt"),
-Accounts              = require("./models/accounts"),
+Schools              = require("./models/schools"),
 webRoutes             = require("./routes/webRoutes"), // This tells the server (app.js) where all the website routes are
-Concession            = require("./models/concession"), // We are telling the server where the Database is stores, (in models)
+Students            = require("./models/students"), // We are telling the server where the Database is stores, (in models)
 passportLocalMongoose = require("passport-local-mongoose"),
 app = express(); // Basically gives express another variable (app) which lets us say "app.use"
 
@@ -24,7 +24,7 @@ mongoose.connect("mongodb://localhost/concession", {
 app.set('view engine', 'ejs');
 app.use(methodOverride("_method"))
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json()) // parse application/json
 app.use(flash())
 app.use(expressSession({
@@ -34,9 +34,9 @@ app.use(expressSession({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-passport.use(new passportLocal(Accounts.authenticate())) // I added {  usernameField: 'email',}
-passport.serializeUser(Accounts.serializeUser())
-passport.deserializeUser(Accounts.deserializeUser())
+passport.use(new passportLocal(Schools.authenticate())) // I added {  usernameField: 'email',}
+passport.serializeUser(Schools.serializeUser())
+passport.deserializeUser(Schools.deserializeUser())
 
 
 
@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
     next();
 })
 app.use(indexRouter)
-app.use("/accounts/:account_id/concessions",webRoutes)
+app.use("/schools/:schools_id/students",webRoutes)
 
 // "/accounts/:account_id/concessions",
 

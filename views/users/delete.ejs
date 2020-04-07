@@ -15,7 +15,7 @@
                 <p class="font-weight-bold">Are you sure you want to delete this coustumer</p>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="/<%= user._id %>?_method=DELETE" >
+                <form method="POST" action="/schools/<%= currentUser._id %>/students/<%= user._id %>?_method=DELETE" >
                     <button type="submit" class="btn btn-outline-danger text-center delete">YES, DELETE</button>
                 </form>
                 <button data-dismiss="modal" type="submit" class="btn btn-outline-primary text-center">NO</button>

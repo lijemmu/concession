@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <form action="/<%= user._id %>/search" method="GET" class="container mb-1">
+        <form action="/schools/<%= currentUser._id %>/students/<%= user._id %>/search" method="GET" class="container mb-1">
             <input type="search" name="searchedDate" class="form-control text-center"style="width: 430px; margin-left: -16px; margin-bottom: 0 !important;" placeholder="Search by date">
         </form>
 
