@@ -5,6 +5,9 @@ Schools = require("../models/schools")
 router = express.Router()
 
 
+
+
+
 // Show all users
 router.get("/home", function (req, res) {
     Schools.findById(req.user._id).populate("students").exec((err, userFound) => {
@@ -14,6 +17,8 @@ router.get("/home", function (req, res) {
         })
     }) // 
 })
+
+
 
 // show about page
 router.get("/aboutPage", function (req, res) {
@@ -25,9 +30,13 @@ router.get("/new", function (req, res) {
     res.render("./users/new")
 })
 
-router.get("/about", function (req, res) {
-    res.render("about")
+// route to update user
+router.get("/updateUser", function (req, res) {
+    res.render("./users/updateUser")
 })
+
+
+
 
 // route for search
 router.get("/:id/search", function (req, res) {
@@ -52,29 +61,33 @@ router.get("/:id/search", function (req, res) {
             }
         })
     } else if (searchDate) {
-        Students.findById(req.params.id).populate('receipt').exec((err, userFound) => {
+        Students.findById(req.params.id).populate('receipt').exec((err, studentFound) => {
             if (err) {
                 throw err
             }
-            userFound.receipt.searchedDate = []
-            for (data of userFound.receipt) {
+            studentFound.receipt.searchedDate = []
+            for (data of studentFound.receipt) {
                 search = new RegExp(searchDate, 'i')
                 if (search.test(data.date)) {
-                    userFound.receipt.searchedDate.push(data)
+                    studentFound.receipt.searchedDate.push(data)
                 }
             }
-            userFound.receipt.flag = true
-            userFound.save()
+            studentFound.receipt.flag = true
+            studentFound.save()
             res.render("./users/show", {
-                user: userFound
+                user: studentFound
             })
         })
     } else {
-        req.flash('error', 'No user found')
-        res.redirect("/schools/" + req.user._id + "/students/home/")
+        Students.findById(req.params.id).populate('receipt').exec((err, studentFound) => {
+                req.flash('error', 'No user found')
+                res.render("./users/show", {
+                    user: studentFound
+                })
+            }
+
+        )
     }
-
-
 })
 
 // Creating new user a user
@@ -129,8 +142,6 @@ router.get("/:id", function (req, res) {
                 res.render("./users/show", {
                     user: user
                 })
-                console.log('break')
-                console.log(user)
             }
 
         })
@@ -192,7 +203,6 @@ router.put("/:id", function (req, res) {
 // create students reciept
 router.post("/receipt/:id", function (req, res) {
     Students.findById(req.params.id, function (err, user) {
-        console.log('user')
         if (err) {
             console.log(err);
             res.redirect("/schools/" + req.user._id + "/students/home/")
@@ -211,7 +221,6 @@ router.post("/receipt/:id", function (req, res) {
         }
     })
 })
-
 
 
 

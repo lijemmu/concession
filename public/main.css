@@ -1,8 +1,9 @@
 /* Login page */
-#loginBody {
+.loginBody {
     background-image: url("https://source.unsplash.com/1918x940/?canyon"), url('https://mdbootstrap.com/img/Photos/Others/images/78.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    
 }
 
 .opacity {
@@ -11,26 +12,25 @@
     height: 100%;
     margin-top: -4%;
     position: fixed;
-   
 }
 
-.login {
-    margin-top: 30%;
-    margin-left: 5%;
+
+
+.flipcard {
+    transition: transform 1s;
+    transform-style: preserve-3d;
 }
 
-hr{
-    width: 25;
-    color: white;
-    border-top: 1px solid white;
-    width: 27% !important;
-    margin-left: 9%;
-    margin-top: -1%;
-}
-.loginInput {
-    width: 40%;
+.flipcard.is-flipped {
+    transform: rotateY(180deg) translateX(-60%);
+    perspective: 100%;
 }
 
+.registerCard, .backregisterCard {
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
 
 .registerCard {
     height: 506;
@@ -38,18 +38,56 @@ hr{
     margin-left: 55%;
     margin-top: -38%;
     opacity: .9;
+   
 }
+
+.backregisterCard {
+    height: 506;
+    width: 50%;
+    margin-left: 55%;
+    margin-top: -38%;
+    opacity: .9;
+    transform: rotateY(180deg);
+   
+}
+
+
+.login {
+    margin-top: 30%;
+    margin-left: 5%;
+}
+
+hr {
+    width: 25;
+    color: white;
+    border-top: 1px solid white;
+    width: 27% !important;
+    margin-left: 9%;
+    margin-top: -1%;
+}
+
+.loginInput {
+    width: 40%;
+}
+
+
+
 
 .card-header {
     height: 65px;
 }
 
-.navbar{
-   height: 70;
-   background-color: rgba(0, 0, 0, 0.3);
-   color: white;
-   z-index: 1;
+.navbar {
+    height: 70;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    z-index: 1;
 }
+
 li {
-    list-style:none;
+    list-style: none;
+}
+
+.navbarSupportedContent {
+    margin-left: 38%;
 }

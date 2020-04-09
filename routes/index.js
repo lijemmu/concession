@@ -8,8 +8,9 @@ var express = require('express'),
 router.get("/", function (req, res) {
     res.render("login")
 })
-router.get("/aboutPage", function (req, res) {
-    res.render("aboutPage")
+
+router.get("/about", function (req, res) {
+    res.render("about")
 })
 
 // Add a user to the db

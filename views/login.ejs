@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="main.css">
 
 
-
+    <!-- Error messages -->
     <div class="container errorClass">
         <% if(error && error.length > 0 ) { %>
         <div class="alert alert-danger text-center" role="alert">
@@ -28,6 +28,8 @@
         <% } %>
     </div>
 </head>
+
+<!-- nav bar -->
 <nav class="navbar navbar-expand-lg navbar-dark ">
     <a class="navbar-brand" href="/home" style="margin-left: 43%">
         <i class="fab fa-cuttlefish fa-3x text-primary" style="border-color: white
@@ -41,7 +43,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class=" h3 navbar-nav mr-auto">
             <li class="nav-item  about">
-                <a class="nav-link" id="about" href="/aboutPage">About</a>
+                <a class="nav-link" id="about" href="/about">About</a>
             </li>
         </ul>
 
@@ -49,84 +51,121 @@
     </div>
 </nav>
 
-<body id="loginBody">
-    <div class="opacity">
-        <div class="container">
-            <!-- Login -->
-            <div class="login ml-3">
-                <h1 class="display-4  text-white " style="margin-left: 10rem;">LOGIN</h1>
-                <hr>
-                <form action="/login" method="post">
-                    <div class="form-group md-form">
-                        <label for="" class="text-white font-weight-bold">School Name</label>
-                        <input type="text" name="username" class="form-control loginInput text-white">
-                    </div>
-                    <div class="form-group md-form">
-                        <label for="" class="text-white font-weight-bold">Password</label>
-                        <input type="password" name="password" class="form-control loginInput text-white">
-                        <button type="submit" class="btn btn-primary mt-3">Login</button>
-                    </div>
-                </form>
-            </div>
 
-            <div class="card registerCard">
-                <div class="card-header">
-                    <h1 class="card-title text-center"> Register </h1>
+<!-- Login and Register Page -->
+
+<body class="loginBody"></body>
+<div class="opacity">
+    <div class="container">
+        <!-- Login -->
+        <div class="login ml-3">
+            <h1 class="display-4  text-white " style="margin-left: 10rem;">LOGIN</h1>
+            <hr>
+            <form action="/login" method="post">
+                <div class="form-group md-form">
+                    <label for="" class="text-white font-weight-bold">School Name</label>
+                    <input type="text" name="username" class="form-control loginInput text-white">
                 </div>
-                <div class="card-body">
-                    <form action="/register" method="post">
-                        <div class="form-group md-form">
-                            <label for="exampleInputEmail1">Email Address</label>
-                            <input type="email" name="email" class="form-control" 
-                                aria-describedby="emailHelp">
-                            <small id="emailHelp" class="form-text text-muted">Please provide the email
-                                of your class counsler</small>
-                        </div>
-                        <div class="form-group md-form">
-                            <label for="exampleInputEmail1">School Name</label>
-                            <input type="text" name="username" class="form-control" 
-                                aria-describedby="emailHelp">
-                            <small id="emailHelp" class="form-text text-muted">Provide the name of your school
-                                followed by your year of graduation.
-                                e.g, "MMS2020"
-                            </small>
-                        </div>
-                        <div class="form-group md-form">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="password"  class="form-control" id="regPassword">
-                        </div>
-                        <div class="form-group md-form">
-                            <label for="exampleInputPassword1"> Confirm Password</label>
-                            <input type="password" class="form-control" id="confPassword">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                <div class="form-group md-form">
+                    <label for="" class="text-white font-weight-bold">Password</label>
+                    <input type="password" name="password" class="form-control loginInput text-white">
+                    <button type="submit" class="btn btn-primary mt-3">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="flipmain">
+            <div class="flipcard">
+                <!--  Register Card   -->
+                <div class="card registerCard">
+                    <div class="card-header">
+                        <h1 class="card-title text-center"> Register </h1>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="">
+                            <div class="form-group md-form">
+                                <label for="exampleInputEmail1">Email Address</label>
+                                <input type="email" name="email" class="form-control" aria-describedby="emailHelp">
+                                <small id="emailHelp" class="form-text text-muted">Please provide the email
+                                    of your class counsler</small>
+                            </div>
+                            <div class="form-group md-form">
+                                <label for="exampleInputEmail1">School Name</label>
+                                <input type="text" name="username" class="form-control" aria-describedby="emailHelp">
+                                <small id="emailHelp" class="form-text text-muted">Provide the name of your school
+                                    followed by your year of graduation.
+                                    e.g, "MMS2020"
+                                </small>
+                            </div>
+                            <div class="form-group md-form">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="regPassword1">
+                            </div>
+                            <div class="form-group md-form">
+                                <label for="exampleInputPassword1"> Confirm Password</label>
+                                <input type="password" class="form-control" id="confPassword1">
+                            </div>
+                            <a id="" class="btn btn-primary flipbtn "> Submit </a>
+                        </form>
 
+                    </div>
+                </div>
+
+
+                <!-- back of register card -->
+                <div class="card backregisterCard">
+                    <div class="card-header">
+                        <h1 class="card-title text-center"> Continue </h1>
+                    </div>
+                    <div class="card-body">
+                        <form action="/register" method="post">
+                            <div class="form-group md-form">
+                                <label for="exampleInputEmail1">Email Address</label>
+                                <input type="email" name="email" class="form-control" aria-describedby="emailHelp">
+                                <small id="emailHelp" class="form-text text-muted">Please provide the email
+                                    of your class counsler</small>
+                            </div>
+                            <div class="form-group md-form">
+                                <label for="exampleInputEmail1">School Name</label>
+                                <input type="text" name="username" class="form-control" aria-describedby="emailHelp">
+                                <small id="emailHelp" class="form-text text-muted">Provide the name of your school
+                                    followed by your year of graduation.
+                                    e.g, "MMS2020"
+                                </small>
+                            </div>
+                            <div class="form-group md-form">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="regPassword2">
+                            </div>
+                            <div class="form-group md-form">
+                                <label for="exampleInputPassword1"> Confirm Password</label>
+                                <input type="password" class="form-control" id="confPassword2">
+                            </div>
+                            <a class="btn btn-primary flipbtn">Submit</button> </a>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-
         </div>
     </div>
+</div>
 
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
+</script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js">
+</script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/js/mdb.min.js">
+</script>
+<script>
+    $(".errorClass").delay(2000).slideUp(1000);
 
-
-
-
-
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
-    </script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/js/mdb.min.js">
-    </script>
-    <script>
-        $(".errorClass").delay(2000).slideUp(1000);
-    </script>
-    <script></script>
-</body>
+    var card = document.querySelector('.flipcard');
+    $(".flipbtn").on('click', function () {
+        card.classList.toggle('is-flipped');
+    });
+</script>
+/</body>

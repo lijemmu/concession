@@ -13,6 +13,7 @@
   <!-- Font Awesome Stylesheet -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
     integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous" />
+    
 
   <link rel="stylesheet" href="main.css">
 
@@ -21,23 +22,35 @@
 
 </head>
 
+<% if(currentUser) { %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/schools/<%= currentUser._id %>/students/home/" style="margin-left: 43%">
+  <div class="dropdown">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <img src="https://source.unsplash.com/40x40/?dogs'" width="40" height="40" class="d-inline-block align-top rounded-pill " alt="" >
+      <%= currentUser.username %>
+    </a>
+  
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item" href=""><i class="fas fa-cog"></i> Settings</a>
+      <a class="dropdown-item" href="/schools/<%= currentUser._id %>/students/updateUser/"><i class="fas fa-user-cog"></i> Update Profile</a>
+    </div>
+  </div>
+  <a class="navbar-brand" href="/schools/<%= currentUser._id %>/students/home/" style="margin-left: 38%">
     <i class="fab fa-cuttlefish fa-3x"></i>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
+<% } %>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" id="home" href="/schools/<%= currentUser._id %>/students/home/">Home</a>
       </li>
       <li class="nav-item  about">
-        <a class="nav-link" id="about" href="/aboutPage">About</a>
+        <a class="nav-link" id="about" href="/schools/<%= currentUser._id %>/students/aboutPage/">About</a>
       </li>
     </ul>
     <ul>
@@ -67,8 +80,10 @@
   $(".errorClass").delay(2000).slideUp(1000);
 </script>
 
-<!-- <meta http-equiv="refresh" content=""> -->
 
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
 
 <%- include ('../partials/footer.ejs') %>
+<!-- TODO: This ^^^ is not working -->
