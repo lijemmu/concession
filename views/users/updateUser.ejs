@@ -1,2 +1,44 @@
-<h1> <%= currentUser.username  %> </h1>
+<head>
+    <!-- BootStrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 
+<!-- TODO: fill out form 
+           value, name  -->
+
+<body>
+    <div class="container">
+        <div class="card-header text-center">
+            <h5>Update School Information</h5>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                <div class="form-group md-form">
+                    <label for="exampleInputEmail1">Email Address</label>
+                    <input type="email" name="email" class="form-control val " aria-describedby="emailHelp" value="<%= currentUser.info.email %>" required>
+                </div>
+                <div class="form-group md-form">
+                    <label for="exampleInputEmail1">School Name</label>
+                    <input type="text" name="username" class="form-control val" value="<%= currentUser.username %>" aria-describedby="emailHelp" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Supervisor Full Name</label>
+                        <input type="text" class="form-control" name="supervisorName" value="<%= currentUser.info.supervisorName %>" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Supervisor Phone Number</label>
+                        <input type="number" name="supervisorPhone" class="form-control" value="<%= currentUser.info.supervisorPhone %>" placeholder="+1" required>
+                    </div>
+                </div>
+                    <div class="d-flex justify-content-center mt-2">
+                        <button class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+        </div>
+
+</body>
+
+<%- include ('../partials/footer.ejs') %>

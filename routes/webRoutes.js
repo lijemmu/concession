@@ -161,6 +161,9 @@ router.get("/:id/edit", function (req, res) {
     })
 })
 
+// edit school name 
+
+
 // Delete a student modal
 router.get("/:id/delete", function (req, res) {
     Students.findById(req.params.id, function (err, foundUser) {

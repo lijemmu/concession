@@ -1,4 +1,3 @@
-
 // Change the active class based on url
 $(document).ready(function () {
   $('li.active').removeClass('active');
@@ -92,8 +91,8 @@ function showInput(userId, balance) {
       // Check errors if any
       if (newBalance < 0) {
         $(".message").addClass('alert alert-danger')
-        .html("Get more money").delay(2000).slideUp(1000);
-        setTimeout(()=> {
+          .html("Get more money").delay(2000).slideUp(1000);
+        setTimeout(() => {
           location.reload(true);
         }, 3000)
         $('#' + userId + 'form').submit(function (e) {
@@ -102,12 +101,12 @@ function showInput(userId, balance) {
           e.preventDefault();
           // Make page reload
         })
-      } else if (action == 0) { 
-          setTimeout(() => {
-            location.reload(true);
-            $(".message").addClass('alert alert-danger')
-          .html('Please Insert More Than Zero').delay(2000).slideUp(1000);
-          }, 3000);
+      } else if (action == 0) {
+        setTimeout(() => {
+          location.reload(true);
+          $(".message").addClass('alert alert-danger')
+            .html('Please Insert More Than Zero').delay(2000).slideUp(1000);
+        }, 3000);
         $('#' + userId + 'form').submit(function (e) {
           input.val("")
           e.stopPropagation();
@@ -138,7 +137,11 @@ $(".edit").on("click", function (e) {
   $("#editStudentModal").modal('show').find('.modal-content').load($(this).attr('href'))
 })
 
-
+// Load modal to update user information from header
+$("#UpdateUser").on("click", function (e) {
+  e.preventDefault();
+  $(".UpdateUserModal").modal('show').find('.modal-content').load($(this).attr('href'))
+})
 // Views > Login 
 
 // Authorization to the home page
@@ -161,4 +164,3 @@ $('.deleteBtn').on('click', function (e) {
   e.preventDefault();
   $('#deleteConfig').modal('show').find('.modal-content').load($(this).attr('href'))
 })
-

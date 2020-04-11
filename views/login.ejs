@@ -121,29 +121,29 @@
                              <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Supervisor Full Name</label>
-                                <input type="text" class="form-control" name=""  placeholder="Full Name" required>
+                                <input type="text" class="form-control" name="supervisorName"  placeholder="Full Name" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">Supervisor Phone Number</label>
-                                <input type="number" class="form-control"  placeholder="+1" required>
+                                <input type="number" name="supervisorPhone" class="form-control"  placeholder="+1" required>
                             </div>
                             </div>
                             <div class="form-group">
                             <label for="inputAddress">School Address</label>
-                            <input type="text" class="form-control" placeholder="1234 Main St" required>
+                            <input type="text" class="form-control" name="schoolAdress" placeholder="1234 Main St" required>
                             </div>
                             <div class="form-group">
                             <label for="inputAddress2"></label>
-                            <input type="text" class="form-control"  placeholder="" >
+                            <input type="text" class="form-control" name="schoolAdress2" placeholder="" >
                             </div>
                             <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputCity">City</label>
-                                <input type="text" class="form-control" id="inputCity" >
+                                <input type="text" class="form-control" name="city" id="inputCity" >
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputState">State</label>
-                                <select id="inputState" class="form-control" >
+                                <select id="inputState" name="state" class="form-control" >
                                     <option selected>Choose...</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -200,7 +200,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputZip">Zip</label>
-                                <input type="text" class="form-control" id="inputZip">
+                                <input type="text" name="zipCode" class="form-control" id="inputZip">
                             </div>
                             </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -226,7 +226,7 @@
 </script>
 <script>
     // error flash
-    $(".errorClass").delay(2000).slideUp(1000);
+    $(".errorClass").delay(20000).slideUp(1000);
 
     // make the register card flip
     // TODO: work on the flip validation

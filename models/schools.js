@@ -8,10 +8,16 @@ var schoolsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Students",
     }],
-    info:[{
+    info:{
+        email: String,
         supervisorName: String,
         supervisorPhone: Number,
-    }]
+        schoolAdress1: String,
+        schoolAdress2: String,
+        city: String,
+        state: String,
+        zipCode: Number,
+    }
 });
 
 schoolsSchema.plugin(passportLocalMongoose) 

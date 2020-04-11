@@ -16,7 +16,17 @@ router.get("/about", function (req, res) {
 // Add a user to the db
 router.post("/register", function (req, res) {
     Schools.register(new Schools({
-        username: req.body.username
+        username: req.body.username,
+        info: {
+            email: req.body.email,
+            supervisorName: req.body.supervisorName,
+            supervisorPhone: req.body.supervisorPhone,
+            schoolAdress: req.body.schoolAdress,
+            schoolAdress2: req.body.schoolAdress2,
+            city: req.body.city,
+            state: req.body.state,
+            zipCode: req.body.zipCode,
+        }
     }), req.body.password, function (err, schools) {
         if (err) {
             req.flash("error", err.message)
