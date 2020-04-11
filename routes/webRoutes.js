@@ -37,12 +37,13 @@ router.get("/updateUser", function (req, res) {
 
 
 
-
 // route for search
 router.get("/:id/search", function (req, res) {
     searchName = req.query.searchedName
     searchDate = req.query.searchedDate
-    if (searchName) {
+    if (searchName == ''){
+        res.redirect("/schools/" + req.user._id + "/students/home/")
+    } else if (searchName) {
         Students.find({
             name: {
                 $regex: new RegExp(searchName, "i")

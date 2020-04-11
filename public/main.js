@@ -1,9 +1,3 @@
-// Confirm Password on Login
-regPassword = $('#regPassword').val()
-confPassword = $('#confPassword').val()
-
-
-
 
 // Change the active class based on url
 $(document).ready(function () {
@@ -98,11 +92,15 @@ function showInput(userId, balance) {
       // Check errors if any
       if (newBalance < 0) {
         $(".message").addClass('alert alert-danger')
-        .html("Get more money, refresh").delay(2000).slideUp(1000);
+        .html("Get more money").delay(2000).slideUp(1000);
+        setTimeout(()=> {
+          location.reload(true);
+        }, 3000)
         $('#' + userId + 'form').submit(function (e) {
           input.val("")
           e.stopPropagation();
           e.preventDefault();
+          // Make page reload
         })
       } else if (action == 0) { 
           setTimeout(() => {
@@ -163,3 +161,4 @@ $('.deleteBtn').on('click', function (e) {
   e.preventDefault();
   $('#deleteConfig').modal('show').find('.modal-content').load($(this).attr('href'))
 })
+
