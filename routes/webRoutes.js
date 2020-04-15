@@ -148,6 +148,8 @@ router.get("/:id", function (req, res) {
         })
 })
 
+
+
 // edit student modal
 router.get("/:id/edit", function (req, res) {
     Students.findById(req.params.id, function (err, foundUser) {
@@ -161,7 +163,6 @@ router.get("/:id/edit", function (req, res) {
     })
 })
 
-// edit school name 
 
 
 // Delete a student modal
@@ -203,6 +204,8 @@ router.put("/:id", function (req, res) {
         }
     })
 })
+
+
 
 // create students reciept
 router.post("/receipt/:id", function (req, res) {

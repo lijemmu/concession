@@ -1,6 +1,7 @@
 // Require Packages
 
-var express           = require("express"), // It is the frame work that we are using 
+var express           = require("express"), // It is the frame work that we are using
+dotenv                = require("dotenv"),
 passport              = require("passport"),
 mongoose              = require('mongoose'), // Is the language of mongodb (database)
 bodyParser            = require('body-parser'),// Allows us to use req.body and parses forms
@@ -17,6 +18,8 @@ passportLocalMongoose = require("passport-local-mongoose"),
 app = express(); // Basically gives express another variable (app) which lets us say "app.use"
 
 // App Usage
+dotenv.config()
+url = process.env.DATABASEURL || "mongodb://localhost/concession";
 mongoose.connect("mongodb://localhost/concession", {
     useNewUrlParser: true,
     useUnifiedTopology: true

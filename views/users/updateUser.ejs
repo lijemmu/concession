@@ -12,15 +12,12 @@
         <div class="card-header text-center">
             <h5>Update School Information</h5>
         </div>
-        <div class="card-body">
-            <form action="" method="post">
+            <!-- Update EmailAdress Supervisor name and phone number-->
+        <form method="post" action="/<%= currentUser._id %>?_method=PUT" >
+            <div class="card-body" id="tabOne">
                 <div class="form-group md-form">
                     <label for="exampleInputEmail1">Email Address</label>
-                    <input type="email" name="email" class="form-control val " aria-describedby="emailHelp" value="<%= currentUser.info.email %>" required>
-                </div>
-                <div class="form-group md-form">
-                    <label for="exampleInputEmail1">School Name</label>
-                    <input type="text" name="username" class="form-control val" value="<%= currentUser.username %>" aria-describedby="emailHelp" required>
+                    <input type="email" name="email" class="form-control val " aria-describedby="emailHelp" value="<%= currentUser.email %>" required>
                 </div>
 
                 <div class="form-row">
@@ -30,15 +27,49 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">Supervisor Phone Number</label>
-                        <input type="number" name="supervisorPhone" class="form-control" value="<%= currentUser.info.supervisorPhone %>" placeholder="+1" required>
+                        <input type="tel" name="supervisorPhone" class="form-control" min="10" max="10" value="<%= currentUser.info.supervisorPhone %>" placeholder="+1" required>
                     </div>
                 </div>
-                    <div class="d-flex justify-content-center mt-2">
-                        <button class="btn btn-primary">Update</button>
-                    </div>
+                <p class="font-small blue-text d-flex justify-content-end">
+                    <a type="button" id="changePassword" role="tab" class="blue-text ml-1">
+                        Change Password?
+                    </a>
+                </p>
+                <div class="d-flex justify-content-center mt-2">
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
-        </div>
-
+            </div>
+        </form>
+        
+            <!-- Update Password -->
+        <form method="post" action="">
+            <div class="card-body d-none" id="tabTwo">
+                <div class="form-group md-form">
+                    <label for="exampleInputEmail1">Email Address</label>
+                    <input type="email" name="email" class="form-control val " aria-describedby="emailHelp" value="<%= currentUser.email %>" required>
+                </div>
+                <p class="font-small blue-text d-flex justify-content-end">
+                    <a type="button" id="UpdateSchoolInfo" role="tab" class="blue-text ml-1">
+                        Update School Information
+                    </a>
+                </p>
+                <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-primary">Send Email</button>
+                </div>
+            </div>
+        </form>    
+     </div>
 </body>
+
+<script>
+    $("#changePassword").on("click", function(){
+        $("#tabOne").addClass("d-none")
+        $("#tabTwo").removeClass("d-none")
+    })
+    $("#UpdateSchoolInfo").on("click", function(){
+        $("#tabOne").removeClass("d-none")
+        $("#tabTwo").addClass("d-none")
+    })
+</script>
 
 <%- include ('../partials/footer.ejs') %>

@@ -4,12 +4,14 @@ var mongoose = require("mongoose"),
 var schoolsSchema = new mongoose.Schema({
     username: String,
     password: String,
+    email: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
     students: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Students",
     }],
     info:{
-        email: String,
         supervisorName: String,
         supervisorPhone: Number,
         schoolAdress1: String,
