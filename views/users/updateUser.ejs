@@ -2,6 +2,19 @@
     <!-- BootStrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="main.css">
+
+
+
 </head>
 
 <!-- TODO: fill out form 
@@ -12,64 +25,111 @@
         <div class="card-header text-center">
             <h5>Update School Information</h5>
         </div>
-            <!-- Update EmailAdress Supervisor name and phone number-->
-        <form method="post" action="/<%= currentUser._id %>?_method=PUT" >
+        <!-- Update EmailAdress Supervisor name and phone number-->
+        <form method="post" action="/<%= currentUser._id %>?_method=PUT">
             <div class="card-body" id="tabOne">
                 <div class="form-group md-form">
                     <label for="exampleInputEmail1">Email Address</label>
-                    <input type="email" name="email" class="form-control val " aria-describedby="emailHelp" value="<%= currentUser.email %>" required>
+                    <input type="email" name="email" class="form-control val " aria-describedby="emailHelp"
+                        value="<%= currentUser.email %>" required>
                 </div>
-
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group md-form col-md-6">
                         <label for="inputEmail4">Supervisor Full Name</label>
-                        <input type="text" class="form-control" name="supervisorName" value="<%= currentUser.info.supervisorName %>" placeholder="Full Name" required>
+                        <input type="text" class="form-control" name="supervisorName"
+                            value="<%= currentUser.info.supervisorName %>" placeholder="Full Name" required>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group md-form col-md-6">
                         <label for="inputPassword4">Supervisor Phone Number</label>
-                        <input type="tel" name="supervisorPhone" class="form-control" min="10" max="10" value="<%= currentUser.info.supervisorPhone %>" placeholder="+1" required>
+                        <input type="tel" name="supervisorPhone" class="form-control" min="10" max="10"
+                            value="<%= currentUser.info.supervisorPhone %>" placeholder="+1" required>
                     </div>
                 </div>
                 <p class="font-small blue-text d-flex justify-content-end">
-                    <a type="button" id="changePassword" role="tab" class="blue-text ml-1">
+                    <a type="button" role="tab" class="text-primary ml-1 changePassword">
                         Change Password?
                     </a>
                 </p>
-                <div class="d-flex justify-content-center mt-2">
-                    <button type="submit" class="btn btn-primary">Update</button>
+                <div class="d-flex justify-content-center mt-2 ml-2">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Update</button>
+                    <button type="button" class="btn btn-outline-danger btn-lg btn-block delete">Delete User</button>
                 </div>
             </div>
         </form>
-        
-            <!-- Update Password -->
+
+        <!-- Update Password -->
         <form method="post" action="">
             <div class="card-body d-none" id="tabTwo">
-                <div class="form-group md-form">
-                    <label for="exampleInputEmail1">Email Address</label>
-                    <input type="email" name="email" class="form-control val " aria-describedby="emailHelp" value="<%= currentUser.email %>" required>
-                </div>
-                <p class="font-small blue-text d-flex justify-content-end">
-                    <a type="button" id="UpdateSchoolInfo" role="tab" class="blue-text ml-1">
-                        Update School Information
-                    </a>
-                </p>
-                <div class="d-flex justify-content-center mt-2">
-                    <button class="btn btn-primary">Send Email</button>
-                </div>
+                <!-- <form action="/forgot" method="POST"> -->  <!-- TODO: Work on this action route-->
+                    <div class="form-group md-form md-form">
+                        <label for="exampleInputEmail1">Email Address</label>
+                        <input type="email" name="email" class="form-control val " aria-describedby="emailHelp"
+                            value="<%= currentUser.email %>" required>
+                    </div>
+                    <p class="font-small blue-text d-flex justify-content-end">
+                        <a type="button"  role="tab" class="text-primary ml-1 UpdateSchoolInfo">
+                            Update School Information
+                        </a>
+                    </p>
+                    <div class="d-flex justify-content-center mt-2">
+                        <button class="btn btn-primary btn-block">Send Email</button>
+                    </div>
+                <!-- </form> -->
             </div>
-        </form>    
-     </div>
+        </form>
+
+        <!-- Delete Your Account -->
+        <form method="post" action="/<%= currentUser._id %>/delete?_method=DELETE">
+            <div class="card-body d-none" id="tabThree">
+                <!-- <form action="/forgot" method="POST"> -->  <!-- TODO: Work on this action route-->
+                    <div class="form-group md-form md-form">
+                        <p class="text-danger font-weight-bold">TO DELETE YOUR ACCOUNT TYPE " <%= currentUser.username %> " </p>
+                        <input type="text" name="delete" class="form-control val " aria-describedby="emailHelp" required>
+                    </div>
+                    <p class="font-small blue-text d-flex justify-content-end">
+                        <a type="button" role="tab" class="text-primary ml-1 UpdateSchoolInfo">
+                            Update School Information
+                        </a>
+                    </p>
+                    <div class="d-flex justify-content-center mt-2">
+                        <button type="submit" class="btn btn-danger btn-lg btn-block" >Delete</button>
+                    </div>
+                <!-- </form> -->
+            </div>
+        </form>
+
+    </div>
 </body>
 
 <script>
-    $("#changePassword").on("click", function(){
+    $(".changePassword").on("click", function () {
         $("#tabOne").addClass("d-none")
+        $("#tabThree").addClass("d-none")
         $("#tabTwo").removeClass("d-none")
     })
-    $("#UpdateSchoolInfo").on("click", function(){
+
+    $(".UpdateSchoolInfo").on("click", function () {
         $("#tabOne").removeClass("d-none")
         $("#tabTwo").addClass("d-none")
+        $("#tabThree").addClass("d-none")
+    })
+    $(".delete").on("click", function () {
+        $("#tabOne").addClass("d-none")
+        $("#tabTwo").addClass("d-none")
+        $("#tabThree").removeClass("d-none")
     })
 </script>
 
+
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
+</script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js">
+</script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/js/mdb.min.js">
+</script>
 <%- include ('../partials/footer.ejs') %>

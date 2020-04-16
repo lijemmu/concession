@@ -25,16 +25,11 @@
 <% if(currentUser) { %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="dropdown">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="btn btn-secondary" id="UpdateUser" href="/schools/<%= currentUser._id %>/students/updateUser" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <img src="https://source.unsplash.com/40x40/?dogs'" width="40" height="40" class="d-inline-block align-top rounded-pill " alt="" >
       <%= currentUser.username %>
     </a>
-  
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <a class="dropdown-item" id="UpdateUser" href="/schools/<%= currentUser._id %>/students/updateUser"><i class="fas fa-user-cog"></i> Update Profile</a>
-    </div>
-  </div>
+    
   <a class="navbar-brand" href="/schools/<%= currentUser._id %>/students/home/" style="margin-left: 38%">
     <i class="fab fa-cuttlefish fa-3x"></i>
   </a>
@@ -61,6 +56,13 @@
   </div>
 </nav>
 
+<div class="modal fade UpdateUserModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
 
 
 <div class="container errorClass">
@@ -81,9 +83,7 @@
   $(".errorClass").delay(2000).slideUp(1000);
 </script>
 
-<script>
-
-</script>
+<script></script>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">

@@ -142,6 +142,10 @@ $("#UpdateUser").on("click", function (e) {
   e.preventDefault();
   $(".UpdateUserModal").modal('show').find('.modal-content').load($(this).attr('href'))
 })
+$(".UpdateUserModal").on('hidden.bs.modal', function(e){
+  location.reload(true);
+}) 
+
 // Views > Login 
 
 // Authorization to the home page
