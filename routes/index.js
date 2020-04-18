@@ -67,21 +67,46 @@ router.put("/:id", function (req, res) {
     })
 })
 
-// Delete Account 
-router.delete("/:id/delete", function (req, res){
-    if (req.user.username === req.body.delete){
-        Schools.findOneAndDelete(req.params.id, function(err, foundUser) {
+
+router.delete("/:id/delete", function (req, res) {
+    if (req.user.username === req.body.delete) {
+        // Find and delete all the receipts for all the students in the school
+        arr = []
+        Schools.findOne({
+            _id: req.params.id
+        }, function (err, foundUser) {
             if (err) throw err
-            Students.deleteMany({
+            Students.find({
                 _id: {
-                    $in:  foundUser.students
+                    $in: foundUser.students
                 }
-            }, (err) => {
-                if (err) throw err
-                req.flash("success", "Your Account has been Deleted")
-                res.redirect("/")
+            }, (err, studentsFound) => {
+                for (item of studentsFound) {
+                    if (item.receipt) {
+                        arr.push(item.receipt)
+                    }
+                }
+                Receipt.deleteMany({
+                    _id: {
+                        $in: arr
+                    }
+                }, (err, receiptsdeleted) => {
+                    Schools.findOneAndDelete(req.params.id, function (err, foundUser) {
+                        if (err) throw err
+                        Students.deleteMany({
+                            _id: {
+                                $in: foundUser.students
+                            }
+                        }, (err) => {
+                            if (err) throw err
+                            req.flash("success", "Your Account has been Deleted")
+                            res.redirect("/")
+                        })
+                    })
+                })
             })
         })
+
     } else {
         req.flash("error", "Make sure you type you follow the instruction")
         res.redirect('back')
@@ -107,9 +132,6 @@ router.get("/logout", function (req, res) {
     req.flash("success", "Thank you, you are logged out")
     res.redirect("/")
 })
-
-
-
 
 
 router.post("/forgot", function (req, res, buf) {
@@ -167,6 +189,7 @@ router.post("/forgot", function (req, res, buf) {
     });
 });
 
+// Forgot password
 router.get('/reset/:token', function (req, res) {
     Schools.findOne({
         resetPasswordToken: req.params.token,
@@ -184,6 +207,7 @@ router.get('/reset/:token', function (req, res) {
     });
 });
 
+// Forgot password
 router.post('/reset/:token/', function (req, res) {
     async.waterfall([
         function (done) {
@@ -224,7 +248,7 @@ router.post('/reset/:token/', function (req, res) {
             });
             var mailOptions = {
                 to: user.email,
-                from: '<No Reply> Concessions@gmail.com',
+                from: 'ftest9060@gmail.com',
                 Subject: 'Your Password has been changed',
                 text: 'Hello, \n\n' +
                     'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
@@ -239,6 +263,50 @@ router.post('/reset/:token/', function (req, res) {
     });
 });
 
+// change password
+router.post('/:id/changePassword', function(req, res){
+    Schools.findOne({_id: req.params.id}, (err, user) => {
+        if (err) {
+            console.log(err)
+        } else {
+            if( req.body.newPassword === req.body.confirm) {
+                user.setPassword(req.body.newPassword, function(err){
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        user.save()
+                        req.flash("success", "Your password has been changed")
+                        res.redirect("/")
+                    }
+                }),function (token, user, done) {
+                    var smtpTransport = nodemailer.createTransport({
+                        service: 'Gmail',
+                        auth: {
+                            user: 'ftest9060@gmail.com', // TODO fill this out
+                            pass: process.env.GMAILPASS // TODO fill this out
+                        }
+                    });
+                    var mailOptions = {
+                        to: user.email,
+                        from: 'ftest9060@gmail.com',
+                        Subject: "Password Changed <Concession>",
+                        text: ' You are receiving this because you (or someone else) has changed the password of your account.\n\n' +
+                            'If you did not perform this action, please make sure you reset your password using the Forgot Password method . \n'
+                    };
+                    smtpTransport.sendMail(mailOptions, function (err) {
+                        console.log('mail sent');
+                        req.flash("success", 'An e-mail has been sent to ' + user.email + ' with further instruction.');
+                        done(err, 'done');
+                        console(err)
+                    });
+                }
+            } else {
+                req.flash("error", "Make sure your passwords Match")
+                res.redirect('back')
+            }
+        }
+    })
+})
 
 
 

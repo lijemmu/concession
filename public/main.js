@@ -138,7 +138,7 @@ $(".edit").on("click", function (e) {
 })
 
 // Load modal to update user information from header
-$("#UpdateUser").on("click", function (e) {
+$(".UpdateUser").on("click", function (e) {
   e.preventDefault();
   $(".UpdateUserModal").modal('show').find('.modal-content').load($(this).attr('href'))
 })
