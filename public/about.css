@@ -14,16 +14,16 @@
 }
 
 .s1 {
-    background-image: url("https://images.unsplash.com/photo-1512149074996-e923ac45be6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background-image: url("https://images.pexels.com/photos/33129/popcorn-movie-party-entertainment.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
     background-size: cover;
 }
 .section h1 {
-    font-size: 128px;
+    font-size: 240px;
     position: absolute;
     top: 20%;
     left: 50%;
     transform: translate(-50%, -20%);
-    background: linear-gradient(to left, white, white );
+    background: linear-gradient(to left, rgb(2, 62, 14), rgb(2, 62, 14) );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -35,7 +35,7 @@
 
 .s2 h1 {
     margin-top: -70px;
-    font-size: 85px;
+    font-size: 75px;
     background: linear-gradient(to left, black, rgba(183, 199, 177, 0.974) );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -53,6 +53,16 @@
     margin: 50px 0px;
 }
 
+p.what{
+    font-family: Comic Sans MS, cursive, sans-serif;
+    line-height: 2;
+}
+p.container{
+    line-height: 2.5;
+    font-size: 20px;
+}
+
+
 .s3 h1{
     font-size: 90px;
     background: linear-gradient(to left, white , rgb(24, 21, 21)  );
@@ -64,3 +74,11 @@
 #fp-nav ul li a span, .fp-slidesNav ul li a span {
     background: #F00;
 }
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    }
+
+/* TODO: Nav bar needs to scroll up with the page  */
