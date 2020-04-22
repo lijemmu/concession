@@ -33,14 +33,14 @@
                     </a>
                     <div class="card-body text-center align-middle">
                         <a href="/schools/<%= currentUser._id %>/students/<%= user._id %>/edit" class="edit">
-                            <h5 class="card-title"><%= user.name%></h5>
+                            <h5 class="card-title text-info"><%= user.name%></h5>
                         </a>
                         <a onclick="showInput('<%= user._id %>', '<%= user.finalBalance %>')">
-                            <h6 id="<%= user._id %>" class="card-subtitle mb-2 text-muted">$<%= user.finalBalance%></h6>
+                            <h6 id="<%= user._id %>" class="card-subtitle mb-2 text-muted"><u class="text-info">$<%= user.finalBalance%></u></h6>
                         </a>
                         <form action="/schools/<%= currentUser._id %>/students/receipt/<%= user._id %>" method="post" id="<%= user._id %>form">
                             <!-- TODO Auto select action input -->
-                            <input id="<%= user._id %>Input" name="receipt[action]" type="text" class="w-50 d-none">
+                            <input id="<%= user._id %>Input" name="receipt[action]" type="text" class="w-50 d-none" >
                             <input type="hidden" name="receipt[date]">
                             <input type="hidden" name="receipt[balance]">
                             <input type="hidden" name="receipt[actionSign]">
