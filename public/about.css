@@ -39,27 +39,89 @@
 }
 
 #learnMore{
-    margin-top: -400px;
-    margin-left: 437px;
+    margin-top: -442px;
+    margin-left: 457px;
 }
 
 .dollar{
     position: relative;
     bottom: 547px;
     left: 58px;
+    font-size: 50px;
 }
 
 .dollar #easy {
     position: relative;
     top: 66px;
+    font-size: 60px;
 }
 .dollar #simple {
     position: relative;
     left: 380;
-    top: 14px;
+    top: -12px;
+    font-size: 60px;
 }
 .dollar #fast {
     position: relative;
     left: 800;
-    top: -43px;
+    top: -91px;
+    font-size: 60px;
+}
+
+.mission {
+    height: 50vh;
+    position: relative;
+    top: -32px;
+}
+
+.mission h1 {
+    font-size: 87px;
+    position: relative;
+    left: -39px;
+    top: 48px;
+}
+.mission p {
+    position: relative;
+    top: 94px;
+    right: 19px;
+    line-height: 2;
+    font-family: Apple Chancery, cursive;
+    font-size: 20px;
+}
+
+.footer {
+    background-color: #6CC090;
+    height: 50vh;
+}
+
+.footer h1 {
+    font-size: 108px;
+    position: relative;
+    left: -27px;
+    top: 48px;
+}
+
+.footer p {
+    position: relative;
+    top: 60px;
+    margin-left: -86px;
+    font-size: 18px
+}
+
+.sm {
+    position: relative;
+    top: 80px;
+    left: -40px;
+    font-size: 66px;
+    width: 79px;
+}
+
+.footer .copyright {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8em;
+    margin: 0 0 2em 0;
+    padding: 0;
+    position: relative;
+    top: 122px;
+    right: 41px;
 }
